@@ -13,6 +13,7 @@ export default function Dialogo ({
     input,
     setInput,
     submit,
+    loadingSave
 }) {
     return (
       <HStack wrap="wrap" gap="4">
@@ -33,19 +34,19 @@ export default function Dialogo ({
                 <Dialog.Positioner>
                   <Dialog.Content>
                     <Dialog.Header>
-                      <Dialog.Title>Criar Tarefa</Dialog.Title>
+                      <Dialog.Title>Criar Cargo</Dialog.Title>
                     </Dialog.Header>
                     <Dialog.Body>
                       <Flex mb={4}>
                             <Input
-                            placeholder="Nome da Tarefa"
+                            placeholder="Descrição do cargo"
                             variant="subtle"
                             mr={3}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                           />
                         </Flex>
-                        <Flex mb={4}>
+                        {/* <Flex mb={4}>
                             <Input
                             placeholder="Descrição da Tarefa"
                             variant="subtle"
@@ -53,7 +54,7 @@ export default function Dialogo ({
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                           />
-                        </Flex>
+                        </Flex> */}
                     </Dialog.Body>
                     <Dialog.Footer>
                       <Dialog.ActionTrigger asChild>
@@ -64,8 +65,10 @@ export default function Dialogo ({
                         onClick={submit} 
                         background="green" 
                         color="white"
+                        loading={loadingSave}
+                        loadingText="Salvando"
                         >
-                            Criar Tarefa
+                          Salvar
                         </Button>
                       </Dialog.ActionTrigger>
                     </Dialog.Footer>

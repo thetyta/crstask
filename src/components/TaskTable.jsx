@@ -11,24 +11,25 @@ export default function TaskTable({
   tasks,
   onDelete,
   onEdit,
-  indexPrimeiroItem
+  indexPrimeiroItem,
+  headers
 }) {
   return (
     <Table.Root width="50%" size="sm" variant="outline">
       <Table.Header>
         <Table.Row>
-          <Table.ColumnHeader>Tarefas</Table.ColumnHeader>
-          <Table.ColumnHeader>Descrição</Table.ColumnHeader>
+          <Table.ColumnHeader>{headers.id}</Table.ColumnHeader>
+          <Table.ColumnHeader>{headers.desc}</Table.ColumnHeader>
           <Table.ColumnHeader textAlign="end">Ações</Table.ColumnHeader>
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {tasks.map((task, i) => {
+        {tasks.map((cargo, i) => {
           const realIndex = indexPrimeiroItem + i;
           return (
             <Table.Row key={realIndex}>
-              <Table.Cell>{task}</Table.Cell>
-              <Table.Cell>coisalegal</Table.Cell>
+               <Table.Cell>{cargo.id}</Table.Cell>
+               <Table.Cell>{cargo.descricao}</Table.Cell>
               <Table.Cell textAlign="end">
                 <Stack direction="row" justify="end">
                   <Button
@@ -36,7 +37,7 @@ export default function TaskTable({
                     variant="subtle"
                     color="white"
                     size="xs"
-                    onClick={() => onDelete(realIndex)}
+                    onClick={() => onDelete(cargo.id)}
                   >
                     <MdDelete />
                   </Button>
@@ -45,7 +46,7 @@ export default function TaskTable({
                     variant="subtle"
                     color="white"
                     size="xs"
-                    onClick={() => onEdit(realIndex, task)}
+                    onClick={() => onEdit(cargo.id, cargo.des)}
                   >
                     <FaEdit />
                   </Button>
