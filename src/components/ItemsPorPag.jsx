@@ -31,7 +31,7 @@ export default function ItemsPorPag({
         <Select.Positioner>
           <Select.Content>
             {valores.items.map((valor) => (
-              <Select.Item 
+              <Select.Item key={valor.value}
               item={valor}
               >
                 {valor.label}

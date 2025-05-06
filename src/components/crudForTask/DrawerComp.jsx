@@ -8,7 +8,6 @@ export default function DrawerComp({
   open,
   setOpen,
   loadingSave,
-  idEdit
 }) {
   return (
     <Portal>
@@ -31,7 +30,7 @@ export default function DrawerComp({
                 Cancelar
               </Button>
               <Button
-                onClick={() => editarTask(idEdit)}
+                onClick={editarTask}
                 isLoading={loadingSave}
                 loadingText="Salvando"
                 background="green"

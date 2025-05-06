@@ -9,8 +9,8 @@ import {
 import { useEffect, useMemo, useState } from 'react';
 import TaskTable from '@/components/TaskTable'
 import PaginationDoida from '@/components/PaginationDoida';
-import DrawerComp from '@/components/DrawerComp';
-import Dialogo from '@/components/Dialogue';
+import DrawerComp from '@/components/crudForTask/DrawerComp';
+import Dialogo from '@/components/crudForTask/Dialogue';
 import ItemsPorPag from '@/components/ItemsPorPag';
 
 export default function Tasks() {
