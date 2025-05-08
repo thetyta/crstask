@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import api from '@/utils/axios';
+import { api, verificarIdUsuario } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
 
 export default function useCrud({ endpoint, fetchData, setOpen }) {

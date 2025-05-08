@@ -1,11 +1,11 @@
-'use client';
+"use client";
 import {
   Button,
   CloseButton,
   Dialog,
   HStack,
-  Portal,
   Input,
+  Portal,
 } from "@chakra-ui/react";
 import { IoAddCircleOutline } from "react-icons/io5";
 
@@ -42,34 +42,39 @@ export default function Dialogo({
                 <Input
                   placeholder="Nome"
                   value={input.nome}
-                  onChange={(e) =>
-                    setInput({ ...input, nome: e.target.value })
-                  }
+                  onChange={(e) => setInput({ ...input, nome: e.target.value })}
                 />
                 Email
                 <Input
                   placeholder="Email"
                   value={input.email}
-                  onChange={(e) =>
-                    setInput({ ...input, email: e.target.value })
-                  }
+                  onChange={(e) => setInput({ ...input, email: e.target.value })}
                 />
+                Senha
+                <Input
+                  placeholder="Senha"
+                  value={input.password}
+                  onChange={(e) => setInput({ ...input, password: e.target.value })}
+                  />
                 CPF
                 <Input
                   placeholder="CPF"
                   value={input.cpf}
-                  onChange={(e) =>
-                    setInput({ ...input, cpf: e.target.value })
-                  }
+                  onChange={(e) => setInput({ ...input, cpf: e.target.value })}
                 />
                 Estudante
-                <Input
-                  placeholder="Estudante"
+                <Input  
+                  placeholder="'true' ou 'false'"
                   value={input.estudante}
-                  onChange={(e) =>
-                    setInput({ ...input, estudante: e.target.value })
-                  }
+                  onChange={(e) => setInput({ ...input, estudante: e.target.value })}
                 />
+                Id Cargo
+                <Input
+                  placeholder="Id Cargo"
+                  value={input.idCargo}
+                  onChange={(e) => setInput({ ...input, idCargo: e.target.value })}
+                />
+                  
               </Dialog.Body>
               <Dialog.Footer>
                 <Dialog.ActionTrigger asChild>
@@ -97,3 +102,7 @@ export default function Dialogo({
     </HStack>
   );
 }
+const items = [
+  { label: "Sim", value: "true" },
+  { label: "Não", value: "false" },
+]

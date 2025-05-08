@@ -4,12 +4,10 @@ import {
   Drawer,
   Input,
   Button,
-  FileUpload,
-  Icon,
-  Box
+  RadioGroup,
+  HStack,
 } from "@chakra-ui/react";
 
-import { HiUpload } from "react-icons/hi";
 
 export default function DrawerComp({
   setInputEdit,
@@ -19,6 +17,10 @@ export default function DrawerComp({
   setOpen,
   loadingSave,
 }) {
+  const items = [
+    { label: "Sim", value: "1" },
+    { label: "Não", value: "2" },
+  ]
   return (
     <Portal>
       <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
@@ -51,10 +53,16 @@ export default function DrawerComp({
               />
               Estudante
               <Input
-                type="checkbox"
                 value={inputEdit.estudante}
                 onChange={(e) =>
                   setInputEdit({ ...inputEdit, estudante: e.target.value })
+                }
+              />
+              ID Cargo
+              <Input
+                value={inputEdit.idCargo}
+                onChange={(e) =>
+                  setInputEdit({ ...inputEdit, idCargo: e.target.value })
                 }
               />
             </Drawer.Body>

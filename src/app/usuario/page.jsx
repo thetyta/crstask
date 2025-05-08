@@ -12,25 +12,28 @@ import PaginationDoida from '@/components/PaginationDoida';
 import DrawerComp from '@/components/Usuario/DrawerComp';
 import Dialogo from '@/components/Usuario/Dialogue';
 import ItemsPorPag from '@/components/ItemsPorPag';
-import api from '@/utils/axios';
+import { api, verificarIdUsuario } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
 import useCrud from '@/components/Usuario/useCrud';
 
-export default function Filme() {
+export default function Usuario() {
   const [items, setItems] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [input, setInput] = useState({
     nome: '',
-    descricao: '',
-    autor: '',
-    duracao: '',
+    email: '',
+    password: '',
+    estudante: '',
+    cpf: '',
+    idCargo: '',
   });
   const [inputEdit, setInputEdit] = useState({
     nome: '',
-    descricao: '',
-    autor: '',
-    duracao: '',
+    email: '',
+    estudante: '',
+    cpf: '',
+    idCargo: ''
   });
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false); 
@@ -45,7 +48,7 @@ export default function Filme() {
       const response = await api.get('/usuario');
       setItems(response.data.data);
     } catch (error) {
-      toaster.create({ title: 'Erro ao buscar filmes', type: 'error' });
+      toaster.create({ title: 'Erro ao buscar usuarios', type: 'error' });
     }
   };
 
@@ -69,7 +72,7 @@ export default function Filme() {
   });
 
   const itemsFiltradas = items.filter(item =>
-    item.descricao.toLowerCase().includes(searchTerm.toLowerCase())
+    item.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const itemsAtuais = itemsFiltradas.slice(
@@ -79,7 +82,7 @@ export default function Filme() {
 
   return (
     <Box p={8}>
-      <Heading mb={4}>Lista de Filmes</Heading>
+      <Heading mb={4}>Lista de Usuários</Heading>
       <Flex mb={4} justifyContent="center" alignItems="center" gap={420}>
         <Input
           placeholder="Pesquise Filmes"
@@ -124,6 +127,7 @@ export default function Filme() {
             { name: 'Email', value: 'email' },
             { name: 'CPF', value: 'cpf' },
             { name: 'Estudante', value: 'estudante' },
+            { name: 'ID Cargo', value: 'idCargo' },
           ]}
         />
 

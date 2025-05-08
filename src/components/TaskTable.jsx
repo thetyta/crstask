@@ -27,7 +27,15 @@ export default function TaskTable({
         {tasks.map((cargo) => (
           <Table.Row key={cargo.id}>
             {headers.map((header, i) => (
-              <Table.Cell key={i}>{cargo[header.value]}</Table.Cell>
+              <Table.Cell key={i}>
+                {header.value === "estudante"
+                  ? cargo[header.value]
+                    ? "Sim"
+                    : "Não"
+                  : typeof cargo[header.value] === 'object' && cargo[header.value] !== null
+                  ? JSON.stringify(cargo[header.value]) // Converte o objeto para string legível
+                  : cargo[header.value]}
+              </Table.Cell>
             ))}
             <Table.Cell textAlign="end">
               <Stack direction="row" justify="end">
@@ -45,7 +53,7 @@ export default function TaskTable({
                   variant="subtle"
                   color="white"
                   size="xs"
-                  onClick={() => onEdit(cargo.id, cargo.descricao)}
+                  onClick={() => onEdit(cargo.id, cargo)}
                 >
                   <FaEdit />
                 </Button>
