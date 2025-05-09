@@ -3,9 +3,21 @@ import { Box, Image, Heading, Text, VStack } from "@chakra-ui/react";
 import React from 'react';
 import LoginInput from "@/components/input/input";
 import { Toaster, toaster } from "@/components/ui/toaster"
-import axios from "axios";
+import axios from "@/utils/axios";
 import { useRouter } from 'next/navigation';
 
+useEffect(() => {
+    const validarToken = async () => {
+      const valido = await verificarToken();
+      if (!valido) {
+        router.push('/');
+      } else {
+        await buscarCargo();
+      }
+    };
+
+    validarToken();
+  }, []);
 
 export default function LoginPc() {
   const router = useRouter();

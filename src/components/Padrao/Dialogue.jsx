@@ -74,7 +74,6 @@ export default function Dialogo({
                 <Dialog.Title>Criar Padrão</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body display="flex" flexDirection="column" gap={4}>
-                {/* Cabeçalho para indicar os campos */}
                 <Stack direction="row" alignItems="center" gap={2}>
                   <Text fontWeight="bold" width="100px">
                     Linha
@@ -89,7 +88,6 @@ export default function Dialogo({
                     ID do Usuário
                   </Text>
                 </Stack>
-
                 {Array.isArray(input.lugares) &&
                   input.lugares.map((lugar, index) => (
                     <Stack key={index} direction="row" alignItems="center" gap={2}>

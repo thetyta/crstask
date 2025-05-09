@@ -12,7 +12,7 @@ import PaginationDoida from '@/components/PaginationDoida';
 import DrawerComp from '@/components/Padrao/DrawerComp';
 import Dialogo from '@/components/Padrao/Dialogue';
 import ItemsPorPag from '@/components/ItemsPorPag';
-import { api, verificarIdUsuario } from '@/utils/axios';
+import { api } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
 import useCrud from '@/components/Padrao/useCrud';
 
@@ -21,7 +21,7 @@ export default function Padrao() {
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [input, setInput] = useState({
-    lugares: [], // Inicialize como um array vazio
+    lugares: [],
   });
   const [inputEdit, setInputEdit] = useState({
     lugares: []

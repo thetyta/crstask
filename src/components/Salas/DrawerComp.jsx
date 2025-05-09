@@ -5,8 +5,7 @@ import {
   Input,
   Button,
 } from "@chakra-ui/react";
-
-
+import { useState } from "react";
 export default function DrawerComp({
   setInputEdit,
   editarTask,
@@ -15,57 +14,55 @@ export default function DrawerComp({
   setOpen,
   loadingSave,
 }) {
+    const [idPadraoValido, setIdPadraoValido] = useState(true);
+    
+    const handleSubmit = async () => {
+        const sucesso = await editarTask();
+        if (!sucesso) {
+          setIdPadraoValido(false);
+          setTimeout(() => {
+            setIdPadraoValido(true);
+          }, 3000);
+        } else {
+          setIdPadraoValido(true);
+        }
+      };
+    
   return (
     <Portal>
       <Drawer.Root open={open} onOpenChange={(e) => setOpen(e.open)}>
         <Drawer.Positioner>
           <Drawer.Content>
             <Drawer.Header>
-              Editar Usuário
+              Editar Sala
             </Drawer.Header>
             <Drawer.Body display="flex" flexDirection="column" gap={4}>
-              Nome
+              Observação
               <Input
-                value={inputEdit.nome}
+                value={inputEdit.observacao}
                 onChange={(e) =>
-                  setInputEdit({ ...inputEdit, nome: e.target.value })
+                  setInputEdit({ ...inputEdit, observacao: e.target.value })
                 }
               />
-              Email
+              Id Padrão
               <Input
-                value={inputEdit.email}
+                value={inputEdit.idPadrao}
                 onChange={(e) =>
-                  setInputEdit({ ...inputEdit, email: e.target.value })
+                  setInputEdit({ ...inputEdit, idPadrao: e.target.value })
                 }
               />
-              CPF
-              <Input
-                value={inputEdit.cpf}
-                onChange={(e) =>
-                  setInputEdit({ ...inputEdit, cpf: e.target.value })
-                }
-              />
-              Estudante
-              <Input
-                value={inputEdit.estudante}
-                onChange={(e) =>
-                  setInputEdit({ ...inputEdit, estudante: e.target.value })
-                }
-              />
-              ID Cargo
-              <Input
-                value={inputEdit.idCargo}
-                onChange={(e) =>
-                  setInputEdit({ ...inputEdit, idCargo: e.target.value })
-                }
-              />
+              {!idPadraoValido && (
+                  <span style={{ color: "red" }}>
+                    ID do padrão não encontrado
+                  </span>
+                )}
             </Drawer.Body>
             <Drawer.Footer>
               <Button variant="outline" mr={3} onClick={() => setOpen(false)}>
                 Cancelar
               </Button>
               <Button
-                onClick={editarTask}
+                onClick={handleSubmit}
                 isLoading={loadingSave}
                 loadingText="Salvando"
                 background="green"

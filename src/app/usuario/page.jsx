@@ -12,7 +12,7 @@ import PaginationDoida from '@/components/PaginationDoida';
 import DrawerComp from '@/components/Usuario/DrawerComp';
 import Dialogo from '@/components/Usuario/Dialogue';
 import ItemsPorPag from '@/components/ItemsPorPag';
-import { api, verificarIdUsuario } from '@/utils/axios';
+import { api } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
 import useCrud from '@/components/Usuario/useCrud';
 
@@ -72,7 +72,7 @@ export default function Usuario() {
   });
 
   const itemsFiltradas = items.filter(item =>
-    item.nome.toLowerCase().includes(searchTerm.toLowerCase())
+    item.nome.toLowerCase().includes(searchTerm.toLowerCase()) || item.id.toString().includes(searchTerm)
   );
 
   const itemsAtuais = itemsFiltradas.slice(
@@ -85,7 +85,7 @@ export default function Usuario() {
       <Heading mb={4}>Lista de Usuários</Heading>
       <Flex mb={4} justifyContent="center" alignItems="center" gap={420}>
         <Input
-          placeholder="Pesquise Filmes"
+          placeholder="Pesquise Usuários"
           variant="subtle"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}

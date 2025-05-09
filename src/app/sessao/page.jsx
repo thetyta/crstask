@@ -9,29 +9,31 @@ import {
 import { useEffect, useState } from 'react';
 import TaskTable from '@/components/TaskTable';
 import PaginationDoida from '@/components/PaginationDoida';
-import DrawerComp from '@/components/Filmes/DrawerComp';
-import Dialogo from '@/components/Filmes/Dialogue';
+import DrawerComp from '@/components/Sessão/DrawerComp';
+import Dialogo from '@/components/Sessão/Dialogue';
 import ItemsPorPag from '@/components/ItemsPorPag';
 import { api } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
-import useCrud from '@/components/Filmes/useCrud';
+import useCrud from '@/components/Sessão/useCrud';
 
-export default function Filme() {
+export default function Sessao() {
   const [items, setItems] = useState([]);
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
   const [input, setInput] = useState({
-    nome: '',
-    descricao: '',
-    autor: '',
-    duracao: '',
+    dataInicio: '',
+    dataFim: '',
+    preco: '',
+    idSala: '',
+    idFilme: '',
   });
   const [inputEdit, setInputEdit] = useState({
-    nome: '',
-    descricao: '',
-    autor: '',
-    duracao: '',
-  });
+    dataInicio: '',
+    dataFim: '',
+    preco: '',
+    idSala: '',
+    idFilme: '',
+});
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false); 
   const [idEdit, setIdEdit] = useState(null);
@@ -40,66 +42,17 @@ export default function Filme() {
   const [taskEditOriginal, setTaskEditOriginal] = useState(null);
 
 
-  const buscarFilme = async () => {
+  const buscarSessao = async () => {
     try {
-      const response = await api.get('/filme');
+      const response = await api.get('/sessao');
       setItems(response.data.data);
     } catch (error) {
-      toaster.create({ title: 'Erro ao buscar filmes', type: 'error' });
+      toaster.create({ title: 'Erro ao buscar sessões', type: 'error' });
     }
   };
 
-  const uploadFile = async (files25, files26) => {
-    const allFiles = [...files25, ...files26];
-    const uploadedData = [];
-
-    const uploadPromises = allFiles.map(async (fileData) => {
-      const { file } = fileData;
-
-      if (!file) {
-        return;
-      }
-
-      const formData = new FormData();
-      const fileBuffer = await file.arrayBuffer();
-      const cleanFile = new File([fileBuffer], file.name.replace(/\s/g, '_'), {
-        type: file.type,
-        lastModified: file.lastModified,
-      });
-
-      formData.append('file', cleanFile, cleanFile.name);
-
-      try {
-        const response = await axios.post("/predict/predict", formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-          transformRequest: (data) => data,
-        });
-
-        const { file: _, ...fileDataWithoutFile } = fileData;
-        uploadedData.push({
-          ...fileDataWithoutFile,
-          fileName: cleanFile.name,
-          fileType: cleanFile.type,
-          fileSize: cleanFile.size,
-          url: response.data.path,
-        });
-
-      } catch (error) {
-        console.error("Upload failed:", error);
-        toaster.create({
-          title: `Failed to upload ${file.name}`,
-          type: "error"
-        });
-      }
-    });
-
-    await Promise.all(uploadPromises);
-
-    sessionStorage.setItem('uploadedFotos', JSON.stringify(uploadedData));
-  };
-
   useEffect(() => {
-    buscarFilme();
+    buscarSessao();
   }, []);
 
   useEffect(() => {
@@ -112,13 +65,13 @@ export default function Filme() {
     excluirItem,  
     loadingSave,
   } = useCrud({
-    endpoint: '/filme',
-    fetchData: buscarFilme,
+    endpoint: '/sessao',
+    fetchData: buscarSessao,
     setIsEditOpen,
   });
 
   const itemsFiltradas = items.filter(item =>
-    item.nome.toLowerCase().includes(searchTerm.toLowerCase()) || item.id.toString().includes(searchTerm)
+    item.preco.toString().includes(searchTerm)
   );
 
   const itemsAtuais = itemsFiltradas.slice(
@@ -128,10 +81,10 @@ export default function Filme() {
 
   return (
     <Box p={8}>
-      <Heading mb={4}>Lista de Filmes</Heading>
+      <Heading mb={4}>Lista de Salas</Heading>
       <Flex mb={4} justifyContent="center" alignItems="center" gap={420}>
         <Input
-          placeholder="Pesquise Filmes"
+          placeholder="Pesquise Salas"
           variant="subtle"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
@@ -146,7 +99,6 @@ export default function Filme() {
           loadingSave={loadingSave}
         />
       </Flex>
-
       <Stack style={{ display: 'flex', alignItems: 'center' }}>
       <TaskTable
         tasks={itemsAtuais}
@@ -168,13 +120,13 @@ export default function Filme() {
         }}
         headers={[
           { name: 'ID', value: 'id' },
-          { name: 'Nome', value: 'nome' },
-          { name: 'Descrição', value: 'descricao' },
-          { name: 'Autor', value: 'autor' },
-          { name: 'Duração', value: 'duracao' },
+          { name: 'Data Inicio', value: 'dataInicio' },
+          { name: 'Data Fim', value: 'dataFim'},
+          { name: 'Preco', value: 'preco' },
+          { name: 'ID Sala', value: 'idSala' },
+          { name: 'ID Filme', value: 'idFilme' },
         ]}
       />
-
         <Flex mb={4} justifyContent="center" alignItems="center" gap={420}>
           <PaginationDoida
             items={itemsFiltradas}
@@ -190,7 +142,6 @@ export default function Filme() {
           />
         </Flex>
       </Stack>
-
       <DrawerComp
         editarTask={() =>
           editarItem({
@@ -206,7 +157,6 @@ export default function Filme() {
         setOpen={setIsEditOpen}
         loadingSave={loadingSave}
         idEdit={idEdit}
-        uploadFile={uploadFile}
       />
     </Box>
   );

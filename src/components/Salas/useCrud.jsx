@@ -6,26 +6,26 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
     const [loadingSave, setLoadingSave] = useState(false);
 
 const criarItem = async ({ input, setInput }) => {
-    if (!input.nome || !input.descricao || !input.autor || !input.duracao)
-      return
+    if (!input.idPadrao){
+        toaster.create({ title: 'Preencha pelo menos idPadrao', type: 'error', duration: 3000 });
+        return
+    }
     try {
       setLoadingSave(true);
       await api.post(endpoint, {
-        nome: input.nome,
-        descricao: input.descricao,
-        autor: input.autor,
-        duracao: input.duracao,
+        observacao: input.observacao? input.observacao : null,
+        idPadrao: parseInt(input.idPadrao)
       })
       await fetchData();
       setInput({
-        nome: '',
-        descricao: '',
-        autor: '',
-        duracao: ''
+        observacao: '',
+        idPadrao: ''
       })
       toaster.create({ title: 'Criado com sucesso', type: 'success', duration: 3000 });
+      return true
     } catch (error) {
-      toaster.create({ title: `Erro ao criar ${error}`, type: 'error', duration: 3000 });
+        toaster.create({ title: `Erro ao criar ${error}`, type: 'error', duration: 3000 });
+        return false
     } finally {
       setLoadingSave(false);
     }
@@ -34,10 +34,8 @@ const criarItem = async ({ input, setInput }) => {
   const editarItem = async ({ id, inputEdit, setInputEdit, task }) => {
     const updatedData = {};
   
-    if (inputEdit.nome && inputEdit.nome !== task.nome) updatedData.nome = inputEdit.nome;
-    if (inputEdit.descricao && inputEdit.descricao !== task.descricao) updatedData.descricao = inputEdit.descricao;
-    if (inputEdit.autor && inputEdit.autor !== task.autor) updatedData.autor = inputEdit.autor;
-    if (inputEdit.duracao && inputEdit.duracao !== task.duracao) updatedData.duracao = inputEdit.duracao;
+    if (inputEdit.observacao && inputEdit.observacao !== task.observacao) updatedData.observacao = inputEdit.observacao;
+    if (inputEdit.idPadrao && inputEdit.idPadrao !== task.idPadrao) updatedData.idPadrao = parseInt(inputEdit.idPadrao);
   
     if (Object.keys(updatedData).length === 0) {
       toaster.create({ title: 'Nenhuma alteração detectada', type: 'info', duration: 3000 });
@@ -49,15 +47,15 @@ const criarItem = async ({ input, setInput }) => {
       await api.patch(`${endpoint}/${id}`, updatedData);
       await fetchData();
       setInputEdit({
-        nome: '',
-        descricao: '',
-        autor: '',
-        duracao: '',
+        observacao: '',
+        idPadrao: ''
       });
       setOpen?.(false);
       toaster.create({ title: 'Atualizado com sucesso', type: 'success', duration: 3000 });
+      return true
     } catch (error) {
       toaster.create({ title: `Erro ao atualizar: ${error}`, type: 'error', duration: 3000 });
+      return false
     } finally {
       setLoadingSave(false);
     }

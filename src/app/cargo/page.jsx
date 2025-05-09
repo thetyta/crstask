@@ -12,7 +12,7 @@ import PaginationDoida from '@/components/PaginationDoida';
 import DrawerComp from '@/components/crudForTask/DrawerComp';
 import Dialogo from '@/components/crudForTask/Dialogue';
 import ItemsPorPag from '@/components/ItemsPorPag';
-import api from '@/utils/axios';
+import { api } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
 import useCrud from '@/components/crudForTask/useCrud';
 

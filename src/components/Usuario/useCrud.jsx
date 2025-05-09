@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { api, verificarIdUsuario } from '@/utils/axios';
+import { api } from '@/utils/axios';
 import { toaster } from '@/components/ui/toaster';
 
 export default function useCrud({ endpoint, fetchData, setOpen }) {
@@ -7,7 +7,7 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
 
   const criarItem = async ({ input, setInput }) => {
     if (!input.nome || !input.email || !input.cpf || !input.estudante || !input.password) {
-      toaster.create({ title: 'Preencha todos os campos corretamente', type: 'error' });
+      toaster.create({ title: 'Preencha todos os campos corretamente', type: 'error', duration: 3000 });
       return;
     }
     
@@ -43,9 +43,9 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
         password: '',
         idCargo: ''
       });
-      toaster.create({ title: 'Usuário criado com sucesso', type: 'success' });
+      toaster.create({ title: 'Usuário criado com sucesso', type: 'success', duration: 3000 });
     } catch (error) {
-      toaster.create({ title: `Erro ao criar usuário: ${error}`, type: 'error' });
+      toaster.create({ title: `Erro ao criar usuário: ${error}`, type: 'error', duration: 3000 });
       console.log("Dados enviados:", {
         nome: input.nome,
         email: input.email,
@@ -71,7 +71,7 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
     }
   
     if (Object.keys(updatedData).length === 0) {
-      toaster.create({ title: 'Nenhuma alteração detectada', type: 'info' });
+      toaster.create({ title: 'Nenhuma alteração detectada', type: 'info', duration: 3000 });
       return;
     }
   
@@ -89,9 +89,9 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
         idCargo: ''
       });
       setOpen?.(false);
-      toaster.create({ title: 'Usuário atualizado com sucesso', type: 'success' });
+      toaster.create({ title: 'Usuário atualizado com sucesso', type: 'success', duration: 3000 });
     } catch (error) {
-      toaster.create({ title: `Erro ao atualizar usuário: ${error}`, type: 'error' });
+      toaster.create({ title: `Erro ao atualizar usuário: ${error}`, type: 'error', duration: 3000 });
       console.error("Erro ao atualizar usuário:", error);
     } finally {
       setLoadingSave(false);
@@ -111,10 +111,10 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
           setCurrentPage(Math.max(totalPaginas, 1));
         }
   
-        toaster.create({ title: 'Deletado com sucesso', type: 'success' });
+        toaster.create({ title: 'Deletado com sucesso', type: 'success', duration: 3000 });
       }
     } catch (error) {
-      toaster.create({ title: 'Erro ao deletar', type: 'error' });
+      toaster.create({ title: 'Erro ao deletar', type: 'error', duration: 3000 });
     }
   };
 

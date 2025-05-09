@@ -11,7 +11,7 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
     // Valida os campos obrigatórios para cada lugar
     for (const lugar of lugares) {
       if (!lugar.linha || !lugar.coluna) {
-        toaster.create({ title: 'Preencha todos os campos obrigatórios', type: 'error' });
+        toaster.create({ title: 'Preencha todos os campos obrigatórios', type: 'error', duration: 3000 });
         return false;
       }
 
@@ -19,7 +19,7 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
       if (lugar.idUsuario && String(lugar.idUsuario).trim() !== "") {
         const valido = await verificarIdUsuario(lugar.idUsuario);
         if (!valido) {
-          toaster.create({ title: `ID do usuário ${lugar.idUsuario} não encontrado`, type: 'error' });
+          toaster.create({ title: `ID do usuário ${lugar.idUsuario} não encontrado`, type: 'error', duration: 3000 });
           return false;
         }
       }
@@ -37,10 +37,10 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
       });
       await fetchData();
       setInput({ lugares: [] });
-      toaster.create({ title: 'Padrão criado com sucesso', type: 'success' });
+      toaster.create({ title: 'Padrão criado com sucesso', type: 'success', duration: 3000 });
       return true;
     } catch (error) {
-      toaster.create({ title: `Erro ao criar padrão: ${error}`, type: 'error' });
+      toaster.create({ title: `Erro ao criar padrão: ${error}`, type: 'error', duration: 3000 });
       return false;
     } finally {
       setLoadingSave(false);
@@ -53,7 +53,7 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
     // Valida os campos obrigatórios para cada lugar
     for (const lugar of lugares) {
       if (!lugar.linha || !lugar.coluna) {
-        toaster.create({ title: 'Preencha todos os campos obrigatórios', type: 'error' });
+        toaster.create({ title: 'Preencha todos os campos obrigatórios', type: 'error', duration: 3000 });
         return false;
       }
   
@@ -61,7 +61,7 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
       if (lugar.idUsuario && String(lugar.idUsuario).trim() !== "") {
         const valido = await verificarIdUsuario(lugar.idUsuario);
         if (!valido) {
-          toaster.create({ title: `ID do usuário ${lugar.idUsuario} não encontrado`, type: 'error' });
+          toaster.create({ title: `ID do usuário ${lugar.idUsuario} não encontrado`, type: 'error', duration: 3000 });
           return false;
         }
       }
@@ -80,10 +80,10 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
       await fetchData();
       setInputEdit({ lugares: [] });
       setOpen?.(false);
-      toaster.create({ title: 'Padrão atualizado com sucesso', type: 'success' });
+      toaster.create({ title: 'Padrão atualizado com sucesso', type: 'success', duration: 3000 });
       return true;
     } catch (error) {
-      toaster.create({ title: `Erro ao atualizar padrão: ${error}`, type: 'error' });
+      toaster.create({ title: `Erro ao atualizar padrão: ${error}`, type: 'error', duration: 3000 });
       return false;
     } finally {
       setLoadingSave(false);
@@ -102,10 +102,10 @@ export default function useCrud({ endpoint, fetchData, setOpen }) {
           setCurrentPage(Math.max(totalPaginas, 1));
         }
 
-        toaster.create({ title: 'Item deletado com sucesso', type: 'success' });
+        toaster.create({ title: 'Item deletado com sucesso', type: 'success', duration: 3000 });
       }
     } catch (error) {
-      toaster.create({ title: 'Erro ao deletar item', type: 'error' });
+      toaster.create({ title: 'Erro ao deletar item', type: 'error', duration: 3000 });
     }
   };
 

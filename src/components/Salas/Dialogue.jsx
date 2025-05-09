@@ -1,12 +1,13 @@
-'use client';
+"use client";
 import {
   Button,
   CloseButton,
   Dialog,
   HStack,
-  Portal,
   Input,
+  Portal,
 } from "@chakra-ui/react";
+import { useState } from "react";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 export default function Dialogo({
@@ -17,6 +18,19 @@ export default function Dialogo({
   open,
   setOpen,
 }) {
+    const [idPadraoValido, setIdPadraoValido] = useState(true);
+    
+      const handleSubmit = async () => {
+        const sucesso = await submit();
+        if (!sucesso) {
+            setIdPadraoValido(false);
+            setTimeout(() => {
+                setIdPadraoValido(true);
+            }, 3000)
+        } else {
+            setIdPadraoValido(true);
+        }
+      };
   return (
     <HStack wrap="wrap" gap="4">
       <Dialog.Root
@@ -35,45 +49,26 @@ export default function Dialogo({
           <Dialog.Positioner>
             <Dialog.Content>
               <Dialog.Header>
-                <Dialog.Title>Criar Filme</Dialog.Title>
+                <Dialog.Title>Criar Usuário</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body display="flex" flexDirection="column" gap={4}>
-                  Nome
-                  <Input
-                    placeholder="Nome do filme"
-                    value={input.nome}
-                    onChange={(e) =>
-                      setInput({ ...input, nome: e.target.value })
-                    }
-                  />
-                  Descrição
-                  <Input
-                    placeholder="Descrição"
-                    value={input.descricao}
-                    onChange={(e) =>
-                      setInput({ ...input, descricao: e.target.value })
-                    }
-                  />
-                  Autor
-                  <Input
-                    placeholder="Autor"
-                    value={input.autor}
-                    onChange={(e) =>
-                      setInput({ ...input, autor: e.target.value })
-                    }
-                  />
-                  Duração
-                  <Input
-                    type="time"
-                    placeholder="Duração"
-                    value={input.duracao}
-                    onChange={(e) =>
-                      setInput({
-                        ...input,
-                        duracao: (e.target.value),
-                      })
-                    }
-                  />
+                Descrição
+                <Input
+                  placeholder="Descrição"
+                  value={input.observacao}
+                  onChange={(e) => setInput({ ...input, observacao: e.target.value })}
+                />
+                Id Padrão
+                <Input
+                  placeholder="Id Padrao"
+                  value={input.idPadrao}
+                  onChange={(e) => setInput({ ...input, idPadrao: e.target.value })}
+                />
+                {!idPadraoValido && (
+                  <span style={{ color: "red" }}>
+                    ID do padrão não encontrado
+                  </span>
+                )}
               </Dialog.Body>
               <Dialog.Footer>
                 <Dialog.ActionTrigger asChild>
@@ -82,7 +77,7 @@ export default function Dialogo({
                   </Button>
                 </Dialog.ActionTrigger>
                 <Button
-                  onClick={submit}
+                  onClick={handleSubmit}
                   background="green"
                   color="white"
                   isLoading={loadingSave}
